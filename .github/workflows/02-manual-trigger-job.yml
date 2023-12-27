@@ -17,6 +17,14 @@ jobs:
   train:
     runs-on: ubuntu-latest
     steps:
+    - name: Install Azure CLI
+      run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    - name: Install PowerShell and Azure Module
+      run: |
+        # Install PowerShell
+        sudo apt-get install -y powershell
+        # Install Azure PowerShell Module
+        pwsh -Command "Install-Module -Name Az -Scope CurrentUser -Force"
     - name: Check out repo
       uses: actions/checkout@main
     - name: Install az ml extension
