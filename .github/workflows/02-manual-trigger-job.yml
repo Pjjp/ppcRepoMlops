@@ -2,12 +2,12 @@ name: Manually trigger an Azure Machine Learning job
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches: [ main ]
 
 env:
-  workspace-name: ppWorkspace # name of the Azure Machine Learning workspace
-  resource-group: ppcResourceGroup # name of the Azure resource group
+  workspace-name: myWorkspace # name of the Azure Machine Learning workspace
+  resource-group: myResourceGroup # name of the Azure resource group
 
 permissions:
   id-token: write
@@ -17,14 +17,6 @@ jobs:
   train:
     runs-on: ubuntu-latest
     steps:
-    - name: Install Azure CLI
-      run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    - name: Install PowerShell and Azure Module
-      run: |
-        # Install PowerShell
-        sudo apt-get install -y powershell
-        # Install Azure PowerShell Module
-        pwsh -Command "Install-Module -Name Az -Scope CurrentUser -Force"
     - name: Check out repo
       uses: actions/checkout@main
     - name: Install az ml extension
@@ -32,11 +24,8 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
-        # creds: '${{secrets.AZURE_CREDENTIALS}}'
-          client-id: '${{secrets.AZURE_CLIENT_ID}}'
-          tenant-id: '${{secrets.AZURE_TENANT_ID}}'
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Trigger Azure ML job
       run: az ml job create --file src/job.yml --workspace-name ${{ env.workspace-name }} --resource-group ${{ env.resource-group }}
-
-      
