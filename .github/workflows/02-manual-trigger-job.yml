@@ -1,9 +1,8 @@
 name: Manually trigger an Azure Machine Learning job
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ main ]
+  pull_request:
+    branches: [main]
 
 env:
   workspace-name: ppWorkspace # name of the Azure Machine Learning workspace
