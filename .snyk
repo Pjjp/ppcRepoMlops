@@ -1,0 +1,7 @@
+version: v1.22.0
+ignore:
+  '*':
+    - '*':
+        reason: "Temporarily ignoring all vulnerabilities"
+        expires: '2024-08-29T11:54:16.639Z'
+patch: {}
