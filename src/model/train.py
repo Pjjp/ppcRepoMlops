@@ -8,7 +8,8 @@ import pandas as pd
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from mlflow.sklearn import autolog 
+from mlflow.sklearn import autolog
+
 
 # define functions
 def main(args):
@@ -34,11 +35,12 @@ def get_csvs_df(path):
     return pd.concat((pd.read_csv(f) for f in csv_files), sort=False)
 
 
-def split_data(df, test_size=0.2): 
-    X = df.drop("Diabetic", axis=1) 
-    y = df["Diabetic"] 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size) 
-    return X_train, X_test, y_train, y_test 
+def split_data(df, test_size=0.2):
+    X = df.drop("Diabetic", axis=1)
+    y = df["Diabetic"]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size)
+    return X_train, X_test, y_train, y_test
 
 
 def train_model(reg_rate, X_train, X_test, y_train, y_test):
@@ -61,6 +63,7 @@ def parse_args():
 
     # return args
     return args
+
 
 # run script
 if __name__ == "__main__":
